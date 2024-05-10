@@ -4,12 +4,12 @@ import android.content.Context
 import android.graphics.Color
 import android.view.Gravity
 import android.view.View
+import android.widget.EditText
 import android.widget.FrameLayout
-import android.widget.TextView
 import io.flutter.plugin.platform.PlatformView
 
 internal class MapView(context: Context?, id: Int, creationParams: Map<String?, Any?>?) : PlatformView {
-    private lateinit var textView: TextView
+    private lateinit var textView: EditText
     private lateinit var frameLayout: FrameLayout
 
     override fun getView(): View {
@@ -21,11 +21,10 @@ internal class MapView(context: Context?, id: Int, creationParams: Map<String?, 
     init {
         context?.let { ct ->
 
-            textView = TextView(ct)
+            textView = EditText(ct)
             textView.textSize = 20f
             textView.setTextColor(Color.WHITE)
-            textView.text = "Rendered on a native Android view (id: $id)"
-            textView.setTextIsSelectable(true)
+            textView.setText("Rendered on a native Android view (id: $id)")
 
             frameLayout = FrameLayout(ct)
             val params = FrameLayout.LayoutParams(
@@ -35,6 +34,5 @@ internal class MapView(context: Context?, id: Int, creationParams: Map<String?, 
             frameLayout.setBackgroundColor(Color.BLUE)
             frameLayout.addView(textView, params)
         }
-
     }
 }
