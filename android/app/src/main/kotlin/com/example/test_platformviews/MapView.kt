@@ -6,10 +6,11 @@ import android.view.Gravity
 import android.view.View
 import android.widget.EditText
 import android.widget.FrameLayout
+import android.webkit.WebView
 import io.flutter.plugin.platform.PlatformView
 
 internal class MapView(context: Context?, id: Int, creationParams: Map<String?, Any?>?) : PlatformView {
-    private lateinit var textView: EditText
+    private lateinit var webView: WebView
     private lateinit var frameLayout: FrameLayout
 
     override fun getView(): View {
@@ -21,18 +22,17 @@ internal class MapView(context: Context?, id: Int, creationParams: Map<String?, 
     init {
         context?.let { ct ->
 
-            textView = EditText(ct)
-            textView.textSize = 20f
-            textView.setTextColor(Color.WHITE)
-            textView.setText("Rendered on a native Android view (id: $id)")
+            webView = WebView(ct)
+            webView.settings.javaScriptEnabled = true
+            webView.loadData("<textarea>Rendered on a native Android view (id: $id)</textarea>", "text/html", null)
 
             frameLayout = FrameLayout(ct)
             val params = FrameLayout.LayoutParams(
-                FrameLayout.LayoutParams.WRAP_CONTENT,
-                FrameLayout.LayoutParams.WRAP_CONTENT)
+                FrameLayout.LayoutParams.MATCH_PARENT,
+                FrameLayout.LayoutParams.MATCH_PARENT)
             params.gravity = Gravity.CENTER
             frameLayout.setBackgroundColor(Color.BLUE)
-            frameLayout.addView(textView, params)
+            frameLayout.addView(webView, params)
         }
     }
 }
